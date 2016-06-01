@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+
+        <meta charset="utf-8">
+        <title>Socket.io</title>
+
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+
+    </head>
+    <body>
+
+        <h1>Communication avec socket.io !</h1>
+        <p><input type="button" class="btn btn-primary btn-lg" value="Send a preformated request" id="poke" /></p>
+
+        <script src="/socket.io/socket.io.js">
+
+            // The connection to the NodeJS module
+            // The path is important and not random
+            // The root here is a reference to the node_modules folder
+
+        </script>
+        <script>
+
+            // The connection with the server on the same port (seems dumb but it needs to be precised)
+            var socket = io.connect('http://localhost:8080');
+
+            // Display a prompt to ask the pseudo of the client
+            var pseudo = prompt("What's your username ? (no special characters)");
+            socket.emit('new_client', pseudo);
+
+            // When receiving an 'message' event from the server
+            socket.on('message', function(message) {
+            alert('The server send you a message : ' + message.content);
+            });
+
+            // When clicking on the poke button, send a request to the server
+            $('#poke').click(function () {
+                socket.emit('message', 'This is spam ! This is spam ! This is spam ! Do you like it ?');
+            })
+
+        </script>
+
+    </body>
+</html>
